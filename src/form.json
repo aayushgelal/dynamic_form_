@@ -54,6 +54,13 @@
         "label": "Message",
         "required": true,
         "placeholder": "Enter your message"
+      },
+      {
+        "id": "file",
+        "type": "file",
+        "label": "File",
+        "required": true,
+        "placeholder": "Upload your file"
       }
     ],
     "url": "/job_app"
@@ -108,6 +115,13 @@
         "label": "Zip",
         "required": true,
         "placeholder": "Enter your zip"
+      },
+      {
+        "id": "Gender",
+        "type": "checkbox",
+        "label": "Gender",
+        "required": true,
+        "options":["Male","Female","Other"]
       }
     ],
     "url": "/user_profile"
