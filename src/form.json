@@ -1,0 +1,115 @@
+{
+  "contact": {
+    "fields": [
+      {
+        "id": "name",
+        "type": "text",
+        "label": "Name",
+        "required": true,
+        "placeholder": "Enter your name"
+      },
+      {
+        "id": "email",
+        "type": "email",
+        "label": "Email",
+        "required": true,
+        "placeholder": "Enter your email"
+      },
+      {
+        "id": "message",
+        "type": "textarea",
+        "label": "Message",
+        "required": true,
+        "placeholder": "Enter your message"
+      }
+    ],
+    "url": "/contact"
+  },
+  "job_app": {
+    "fields": [
+      {
+        "id": "name",
+        "type": "text",
+        "label": "Name",
+        "required": true,
+        "placeholder": "Enter your name"
+      },
+      {
+        "id": "email",
+        "type": "email",
+        "label": "Email",
+        "required": true,
+        "placeholder": "Enter your email"
+      },
+      {
+        "id": "phone",
+        "type": "text",
+        "label": "Phone",
+        "required": true,
+        "placeholder": "Enter your phone number"
+      },
+      {
+        "id": "message",
+        "type": "textarea",
+        "label": "Message",
+        "required": true,
+        "placeholder": "Enter your message"
+      }
+    ],
+    "url": "/job_app"
+  },
+  "user_profile": {
+    "fields": [
+      {
+        "id": "name",
+        "type": "text",
+        "label": "Name",
+        "required": true,
+        "placeholder": "Enter your name"
+      },
+      {
+        "id": "email",
+        "type": "email",
+        "label": "Email",
+        "required": true,
+        "placeholder": "Enter your email"
+      },
+      {
+        "id": "phone",
+        "type": "text",
+        "label": "Phone",
+        "required": true,
+        "placeholder": "Enter your phone number"
+      },
+      {
+        "id": "address",
+        "type": "text",
+        "label": "Address",
+        "required": true,
+        "placeholder": "Enter your address"
+      },
+      {
+        "id": "city",
+        "type": "text",
+        "label": "City",
+        "required": true,
+        "placeholder": "Enter your city"
+      },
+      {
+        "id": "state",
+        "type": "text",
+        "label": "State",
+        "required": true,
+        "placeholder": "Enter your state"
+      },
+      {
+        "id": "zip",
+        "type": "text",
+        "label": "Zip",
+        "required": true,
+        "placeholder": "Enter your zip"
+      }
+    ],
+    "url": "/user_profile"
+  }
+}
