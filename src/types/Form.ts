@@ -29,3 +29,12 @@ export interface FormSelectorProps {
   selectedForm: FormType;
   onFormTypeChange: (formType: FormType) => void;
 }
+
+export interface BaseFieldProps {
+  id: string;
+  value: any;
+  error?: string;
+  placeholder?: string;
+  required?: boolean;
+  onChange: (value: any) => void;
+}

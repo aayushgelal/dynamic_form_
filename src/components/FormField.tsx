@@ -1,12 +1,8 @@
-import React from "react";
-import { FieldType } from "../types/Form";
-
-interface FormFieldProps {
-  field: FieldType;
-  value: any;
-  error?: string;
-  onFieldChange: (fieldId: string, value: any) => void;
-}
+import { FormFieldProps } from "../types/Form";
+import { CheckboxGroup } from "./InputTypes/CheckBox";
+import { Select } from "./InputTypes/SelectProps";
+import { TextArea } from "./InputTypes/TextArea";
+import { TextInput } from "./InputTypes/TextInput";
 
 export const FormField: React.FC<FormFieldProps> = ({
   field,
@@ -14,88 +10,29 @@ export const FormField: React.FC<FormFieldProps> = ({
   error,
   onFieldChange,
 }) => {
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-  ) => {
-    if (field.type === "checkbox") {
-      const checkbox = e.target as HTMLInputElement;
-      onFieldChange(field.id, checkbox.checked);
-    } else {
-      onFieldChange(field.id, e.target.value);
-    }
+  const handleChange = (newValue: any) => {
+    onFieldChange(field.id, newValue);
   };
 
   const renderField = () => {
+    const commonProps = {
+      id: field.id,
+      value,
+      error,
+      placeholder: field.placeholder,
+      required: field.required,
+      onChange: handleChange,
+    };
+
     switch (field.type) {
       case "textarea":
-        return (
-          <textarea
-            id={field.id}
-            value={value || ""}
-            onChange={handleChange}
-            placeholder={field.placeholder}
-            required={field.required}
-            className={error ? "error-input" : ""}
-          />
-        );
+        return <TextArea {...commonProps} />;
       case "select":
-        return (
-          <select
-            id={field.id}
-            value={value || ""}
-            onChange={handleChange}
-            required={field.required}
-            className={error ? "error-input" : ""}
-          >
-            <option value="">Select...</option>
-            {field.options?.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        );
+        return <Select {...commonProps} options={field.options || []} />;
       case "checkbox":
-        return (
-          <div>
-            {field.options?.map((option) => (
-              <label key={option}>
-                <input
-                  type="checkbox"
-                  value={option}
-                  checked={value?.includes(option)}
-                  onChange={(e) => {
-                    const newValue = value ? [...value] : [];
-                    if (e.target.checked) {
-                      newValue.push(option);
-                    } else {
-                      const index = newValue.indexOf(option);
-                      if (index > -1) {
-                        newValue.splice(index, 1);
-                      }
-                    }
-                    onFieldChange(field.id, newValue);
-                  }}
-                />
-                {option}
-              </label>
-            ))}
-          </div>
-        );
+        return <CheckboxGroup {...commonProps} options={field.options || []} />;
       default:
-        return (
-          <input
-            type={field.type}
-            id={field.id}
-            value={value || ""}
-            onChange={handleChange}
-            placeholder={field.placeholder}
-            required={field.required}
-            className={error ? "error-input" : ""}
-          />
-        );
+        return <TextInput {...commonProps} type={field.type} />;
     }
   };
 
