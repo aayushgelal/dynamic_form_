@@ -6,21 +6,45 @@
         "type": "text",
         "label": "Name",
         "required": true,
-        "placeholder": "Enter your name"
+        "placeholder": "Enter your name",
+        "validation": {
+          "required": true,
+          "minLength": 3,
+          "maxLength": 20
+        },
+        "errorMessages": {
+          "required": "Name is required",
+          "minLength": "Name must be at least 3 characters",
+          "maxLength": "Name cannot exceed 20 characters"
+        }
       },
       {
         "id": "email",
         "type": "email",
         "label": "Email",
         "required": true,
-        "placeholder": "Enter your email"
+        "placeholder": "Enter your email",
+        "validation": {
+          "required": true,
+          "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+        },
+        "errorMessages": {
+          "required": "Email is required",
+          "pattern": "Please enter a valid email address"
+        }
       },
       {
         "id": "message",
         "type": "textarea",
         "label": "Message",
         "required": true,
-        "placeholder": "Enter your message"
+        "placeholder": "Enter your message",
+        "validation": {
+          "required": true
+        },
+        "errorMessages": {
+          "required": "Message is required"
+        }
       }
     ],
     "url": "/contact"
@@ -32,35 +56,69 @@
         "type": "text",
         "label": "Name",
         "required": true,
-        "placeholder": "Enter your name"
+        "placeholder": "Enter your name",
+        "validation": {
+          "required": true
+        },
+        "errorMessages": {
+          "required": "Name is required"
+        }
       },
       {
         "id": "email",
         "type": "email",
         "label": "Email",
         "required": true,
-        "placeholder": "Enter your email"
+        "placeholder": "Enter your email",
+        "validation": {
+          "required": true,
+          "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+        },
+        "errorMessages": {
+          "required": "Email is required",
+          "pattern": "Please enter a valid email address"
+        }
       },
       {
         "id": "phone",
         "type": "text",
         "label": "Phone",
         "required": true,
-        "placeholder": "Enter your phone number"
+        "placeholder": "Enter your phone number",
+        "validation": {
+          "required": true,
+          "pattern": "^\\d{10}$"
+        },
+        "errorMessages": {
+          "required": "Phone number is required",
+          "pattern": "Please enter a valid 10-digit phone number"
+        }
       },
       {
         "id": "message",
         "type": "textarea",
         "label": "Message",
         "required": true,
-        "placeholder": "Enter your message"
+        "placeholder": "Enter your message",
+        "validation": {
+          "required": true
+        },
+        "errorMessages": {
+          "required": "Message is required"
+        }
       },
       {
         "id": "file",
         "type": "file",
         "label": "File",
         "required": true,
-        "placeholder": "Upload your file"
+        "placeholder": "Upload your file",
+        "validation": {
+          "required": true
+        },
+        "errorMessages": {
+          "required": "File upload is required"
+        }
       }
     ],
     "url": "/job_app"
@@ -72,56 +130,110 @@
         "type": "text",
         "label": "Name",
         "required": true,
-        "placeholder": "Enter your name"
+        "placeholder": "Enter your name",
+        "validation": {
+          "required": true
+        },
+        "errorMessages": {
+          "required": "Name is required"
+        }
       },
       {
         "id": "email",
         "type": "email",
         "label": "Email",
         "required": true,
-        "placeholder": "Enter your email"
+        "placeholder": "Enter your email",
+        "validation": {
+          "required": true,
+          "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+        },
+        "errorMessages": {
+          "required": "Email is required",
+          "pattern": "Please enter a valid email address"
+        }
       },
       {
         "id": "phone",
         "type": "text",
         "label": "Phone",
         "required": true,
-        "placeholder": "Enter your phone number"
+        "placeholder": "Enter your phone number",
+        "validation": {
+          "required": true,
+          "pattern": "^\\d{10}$"
+        },
+        "errorMessages": {
+          "required": "Phone number is required",
+          "pattern": "Please enter a valid 10-digit phone number"
+        }
       },
       {
         "id": "address",
         "type": "text",
         "label": "Address",
         "required": true,
-        "placeholder": "Enter your address"
+        "placeholder": "Enter your address",
+        "validation": {
+          "required": true
+        },
+        "errorMessages": {
+          "required": "Address is required"
+        }
       },
       {
         "id": "city",
         "type": "text",
         "label": "City",
         "required": true,
-        "placeholder": "Enter your city"
+        "placeholder": "Enter your city",
+        "validation": {
+          "required": true
+        },
+        "errorMessages": {
+          "required": "City is required"
+        }
       },
       {
         "id": "state",
         "type": "text",
         "label": "State",
         "required": true,
-        "placeholder": "Enter your state"
+        "placeholder": "Enter your state",
+        "validation": {
+          "required": true
+        },
+        "errorMessages": {
+          "required": "State is required"
+        }
       },
       {
         "id": "zip",
         "type": "text",
         "label": "Zip",
         "required": true,
-        "placeholder": "Enter your zip"
+        "placeholder": "Enter your zip",
+        "validation": {
+          "required": true,
+          "pattern": "^\\d{5}(-\\d{4})?$"
+        },
+        "errorMessages": {
+          "required": "ZIP code is required",
+          "pattern": "Please enter a valid ZIP code"
+        }
       },
       {
-        "id": "Gender",
+        "id": "gender",
         "type": "checkbox",
         "label": "Gender",
         "required": true,
-        "options":["Male","Female","Other"]
+        "options": ["Male", "Female", "Other"],
+        "validation": {
+          "required": true
+        },
+        "errorMessages": {
+          "required": "Please select a gender option"
+        }
       }
     ],
     "url": "/user_profile"

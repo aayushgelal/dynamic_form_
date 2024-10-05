@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { FieldType } from "../types/Form";
 import { FormField } from "./FormField";
+import { FieldType, FormType } from "../types/Form";
+import { validateField } from "../validation/validation";
 
 interface DynamicFormProps {
-  formType: string;
+  formType: FormType;
   formSchema: any;
   onSubmit: (formData: any) => void;
 }
@@ -13,38 +14,71 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
   formSchema,
   onSubmit,
 }) => {
-  const [formData, setFormData] = useState<any>({});
+  const [formData, setFormData] = useState<Record<string, any>>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [currentForm, setCurrentForm] = useState<any>(null);
 
   useEffect(() => {
     setCurrentForm(formSchema[formType]);
-    setFormData({}); // form data reset huncha
+    setFormData({});
+    setErrors({});
   }, [formType, formSchema]);
 
-  const handleFieldChange = (name: string, value: any) => {
-    setFormData((prevData:any) => ({
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {};
+    let isValid = true;
+
+    currentForm.fields.forEach((field: FieldType) => {
+      const error = validateField(formData[field.id], field);
+      if (error) {
+        console.log("err");
+        newErrors[field.id] = error;
+        isValid = false;
+      }
+    });
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleFieldChange = (fieldId: string, value: any) => {
+    setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [fieldId]: value,
     }));
+
+    const field = currentForm.fields.find((f: FieldType) => f.id === fieldId);
+    if (field) {
+
+      const error = validateField(value, field);
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [fieldId]: error || "",
+      }));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    if (validateForm()) {
+      onSubmit(formData);
+    }
   };
 
   if (!currentForm) return null;
 
   return (
     <form onSubmit={handleSubmit}>
-      {currentForm.fields.map((field: FieldType, index: number) => (
+      {currentForm.fields.map((field: FieldType) => (
         <FormField
-          key={index}
+          key={field.id}
           field={field}
+          value={formData[field.id]}
+          error={errors[field.id]}
           onFieldChange={handleFieldChange}
         />
       ))}
-      <input type="submit" value="Submit" />
+      <button type="submit">Submit</button>
     </form>
   );
 };

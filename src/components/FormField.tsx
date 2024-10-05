@@ -1,74 +1,109 @@
-import React, { useState } from "react";
-import { FormFieldProps } from "../types/Form";
+import React from "react";
+import { FieldType } from "../types/Form";
+
+interface FormFieldProps {
+  field: FieldType;
+  value: any;
+  error?: string;
+  onFieldChange: (fieldId: string, value: any) => void;
+}
 
 export const FormField: React.FC<FormFieldProps> = ({
   field,
+  value,
+  error,
   onFieldChange,
 }) => {
-  const [fieldValue, setFieldValue] = useState<any>("");
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked, files } = e.target;
-    let newValue: any;
-
-    if (type === "checkbox") {
-      newValue = checked ? value : "";
-    } else if (type === "file") {
-      newValue = files ? files[0] : null;
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
+    if (field.type === "checkbox") {
+      const checkbox = e.target as HTMLInputElement;
+      onFieldChange(field.id, checkbox.checked);
     } else {
-      newValue = value;
+      onFieldChange(field.id, e.target.value);
     }
-
-    setFieldValue(newValue);
-    onFieldChange(name, newValue);
   };
 
-  if (field.type === "checkbox" && field.options) {
-    return (
-      <div>
-        <label>{field.label}</label>
-        {field.options.map((value: string, index: number) => (
-          <div key={index}>
-            <input
-              type="checkbox"
-              name={field.label}
-              value={value}
-              checked={fieldValue === value}
-              required={field.required}
-              onChange={handleInputChange}
-            />
-            <label>{value}</label>
+  const renderField = () => {
+    switch (field.type) {
+      case "textarea":
+        return (
+          <textarea
+            id={field.id}
+            value={value || ""}
+            onChange={handleChange}
+            placeholder={field.placeholder}
+            required={field.required}
+            className={error ? "error-input" : ""}
+          />
+        );
+      case "select":
+        return (
+          <select
+            id={field.id}
+            value={value || ""}
+            onChange={handleChange}
+            required={field.required}
+            className={error ? "error-input" : ""}
+          >
+            <option value="">Select...</option>
+            {field.options?.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        );
+      case "checkbox":
+        return (
+          <div>
+            {field.options?.map((option) => (
+              <label key={option}>
+                <input
+                  type="checkbox"
+                  value={option}
+                  checked={value?.includes(option)}
+                  onChange={(e) => {
+                    const newValue = value ? [...value] : [];
+                    if (e.target.checked) {
+                      newValue.push(option);
+                    } else {
+                      const index = newValue.indexOf(option);
+                      if (index > -1) {
+                        newValue.splice(index, 1);
+                      }
+                    }
+                    onFieldChange(field.id, newValue);
+                  }}
+                />
+                {option}
+              </label>
+            ))}
           </div>
-        ))}
-      </div>
-    );
-  }
-
-  if (field.type === "file") {
-    return (
-      <div>
-        <label>{field.label}</label>
-        <input
-          type="file"
-          name={field.label}
-          required={field.required}
-          onChange={handleInputChange}
-        />
-      </div>
-    );
-  }
+        );
+      default:
+        return (
+          <input
+            type={field.type}
+            id={field.id}
+            value={value || ""}
+            onChange={handleChange}
+            placeholder={field.placeholder}
+            required={field.required}
+            className={error ? "error-input" : ""}
+          />
+        );
+    }
+  };
 
   return (
-    <div>
-      <label>{field.label}</label>
-      <input
-        type={field.type}
-        name={field.label}
-        value={fieldValue}
-        placeholder={field.placeholder}
-        required={field.required}
-        onChange={handleInputChange}
-      />
+    <div className="form-field">
+      <label htmlFor={field.id}>{field.label}</label>
+      {renderField()}
+      {error && <div className="error-message">{error}</div>}
     </div>
   );
 };
