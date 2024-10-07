@@ -4,6 +4,8 @@ import formSchema from "./form.json";
 import { FormSelector } from "./components/FormSelector";
 import { FormType } from "./types/Form";
 import { DynamicForm } from "./components/DyanmicForm";
+import { MyForm } from "./components/IndividualForm";
+import InputField from "./components/AllinOne/InputField";
 
 export default function App() {
   const [currentFormType, setCurrentFormType] =
@@ -30,12 +32,17 @@ export default function App() {
 
   return (
     <main>
-      <FormSelector onFormTypeChange={setCurrentFormType} />
+      <FormSelector
+        selectedForm={currentFormType}
+        onFormTypeChange={setCurrentFormType}
+      />
       <DynamicForm
         formType={currentFormType}
         formSchema={formSchema}
         onSubmit={handleFormSubmit}
       />
+      <InputField id="name" />
+      <InputField id="gender" />
     </main>
   );
 }

@@ -49,7 +49,6 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
 
     const field = currentForm.fields.find((f: FieldType) => f.id === fieldId);
     if (field) {
-
       const error = validateField(value, field);
       setErrors((prevErrors) => ({
         ...prevErrors,

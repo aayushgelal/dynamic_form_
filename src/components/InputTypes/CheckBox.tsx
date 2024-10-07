@@ -8,7 +8,6 @@ export const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
   id,
   value,
   options,
-  onChange,
 }) => (
   <div>
     {options.map((option) => (
