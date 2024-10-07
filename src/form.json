@@ -45,6 +45,32 @@
         "errorMessages": {
           "required": "Message is required"
         }
+      },
+      {
+        "id": "file",
+        "type": "file",
+        "label": "File",
+        "required": true,
+        "placeholder": "Upload your file",
+        "validation": {
+          "required": true
+        },
+        "errorMessages": {
+          "required": "File upload is required"
+        }
+      },
+      {
+        "id": "checkbox",
+        "type": "checkbox",
+        "label": "Gender",
+        "required": true,
+        "options": ["Male", "Female", "Other"],
+        "validation": {
+          "required": true
+        },
+        "errorMessages": {
+          "required": "Please select a gender option"
+        }
       }
     ],
     "url": "/contact"

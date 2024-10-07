@@ -7,6 +7,7 @@ interface CheckboxGroupProps extends BaseFieldProps {
 export const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
   id,
   value,
+  onChange,
   options,
 }) => (
   <div>
