@@ -30,16 +30,14 @@ export default function App() {
 
   return (
     <main>
-      <FormField id="name" />
-      <FormField id="file" />
-      <FormField id="checkbox" options={["male", "female", "others"]} />
-      {/* <DynamicForm
-        formType={currentFormType}
-        formSchema={formSchema}
-        onSubmit={handleFormSubmit}
-      /> */}
-      {/* <InputField id="name" />
-      <InputField id="gender" /> */}
+
+      <DynamicForm formSchema={formSchema["contact"]} />
+      <FormField
+        field={formSchema.contact.fields.find(
+          (field: any) => field.id === "name",
+        )}
+      />
+
     </main>
   );
 }
