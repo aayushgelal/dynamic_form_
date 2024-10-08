@@ -2,23 +2,6 @@
   "contact": {
     "fields": [
       {
-        "id": "name",
-        "type": "text",
-        "label": "Name",
-        "required": true,
-        "placeholder": "Enter your name",
-        "validation": {
-          "required": true,
-          "minLength": 3,
-          "maxLength": 20
-        },
-        "errorMessages": {
-          "required": "Name is required",
-          "minLength": "Name must be at least 3 characters",
-          "maxLength": "Name cannot exceed 20 characters"
-        }
-      },
-      {
         "id": "email",
         "type": "email",
         "label": "Email",
@@ -50,10 +33,10 @@
         "id": "file",
         "type": "file",
         "label": "File",
-        "required": true,
+        "required": false,
         "placeholder": "Upload your file",
         "validation": {
-          "required": true
+          "required": false
         },
         "errorMessages": {
           "required": "File upload is required"

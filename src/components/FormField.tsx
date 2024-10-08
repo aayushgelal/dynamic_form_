@@ -1,35 +1,55 @@
 import { useEffect, useState } from "react";
-import { FieldType, FormType } from "../types/Form";
+import { FieldType } from "../types/Form";
 import { CheckboxGroup } from "./InputTypes/CheckBox";
 import { Select } from "./InputTypes/SelectProps";
 import { TextArea } from "./InputTypes/TextArea";
 import { TextInput } from "./InputTypes/TextInput";
 import { validateField } from "../validation/validation";
-import formFields from "../form.json";
 
-export const FormField: React.FC<{
+interface FormFieldProps {
   options?: Array<string>;
   field: FieldType;
-}> = ({ options, field }) => {
+  errorExist?: (hasError: boolean) => void;
+  onChange?: (value: any, error: string | null) => void;
+}
+
+export const FormField: React.FC<FormFieldProps> = ({
+  options,
+  field,
+  errorExist,
+  onChange,
+}) => {
   const [value, setValue] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (errorExist && field.required) {
+      errorExist(true);
+    }
+  }, []);
+
   const handleChange = (newValue: any) => {
-    if (field) {
-      let valueToSet = newValue;
+    if (!field) return;
 
-      if (field.type === "checkbox") {
-        valueToSet = newValue.target.checked;
-      } else if (field.type === "file") {
-        valueToSet = newValue.target.files;
-      } else if (field.type === "text") {
-        valueToSet = newValue.target.value;
-      }
+    let valueToSet = newValue;
+    if (field.type === "checkbox") {
+      valueToSet = newValue.target.checked;
+    } else if (field.type === "file") {
+      valueToSet = newValue.target.files;
+    } else if (field.type === "text") {
+      valueToSet = newValue.target.value;
+    }
 
-      setValue(valueToSet);
+    setValue(valueToSet);
+    const validationError = validateField(valueToSet, field);
+    setError(validationError);
 
-      const validationError = validateField(valueToSet, field);
-      setError(validationError);
+    if (errorExist) {
+      errorExist(!!validationError);
+    }
+
+    if (onChange) {
+      onChange(valueToSet, validationError);
     }
   };
 
@@ -39,7 +59,7 @@ export const FormField: React.FC<{
     const commonProps = {
       id: field.id,
       value: value || "",
-      error: field.validation?.errorMessage,
+      error: error || field.validation?.errorMessage,
       placeholder: field.placeholder,
       required: field.required,
       onChange: handleChange,
@@ -53,7 +73,7 @@ export const FormField: React.FC<{
       case "checkbox":
         return <CheckboxGroup {...commonProps} options={options!} />;
       default:
-        return <TextInput {...commonProps} type={field.type} />;
+        return <TextInput {...commonProps} type={field.type as any} />;
     }
   };
 
